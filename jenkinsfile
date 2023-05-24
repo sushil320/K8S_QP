@@ -18,7 +18,7 @@ stage('Checkout SCM') {
       $class: 'GitSCM',
       branches: [[name: 'main']],
       userRemoteConfigs: [[
-        url: 'https://github.com/muddukrishnahm/demo-webapp.git',
+        url: 'https://github.com/sushil320/K8S_QP.git',
         credentialsId: '',
       ]]
      ])
@@ -31,7 +31,7 @@ stage('Checkout SCM') {
             steps {
                 script {
 					    sh 'rm -rf demo-webapp'
-					     sh "git clone https://github.com/muddukrishnahm/demo-webapp.git"
+					     sh "git clone https://github.com/sushil320/K8S_QP.git"
 						 //sh 'sudo docker build -t qprofilesdemo/python demo-webapp '      
 						 dockerImage = docker.build(dockerimagename, "./demo-webapp")
 
@@ -57,13 +57,12 @@ stage('Checkout SCM') {
     stage('Deploying App to Kubernetes') {
       steps {
         script {
-          
-		  sshagent(['k8s-master']) {
-		      
-		       sh 'ssh -o StrictHostKeyChecking=no -l ubuntu 3.95.222.185 rm -rf demo-webapp'
-		       sh 'ssh -o StrictHostKeyChecking=no -l ubuntu 3.95.222.185 git clone https://github.com/Qprofilesdevops/demo-webapp.git'
-		       sh 'ssh -o StrictHostKeyChecking=no -l ubuntu 3.95.222.185 kubectl delete -f demo-webapp/deployment.yaml'
-		       sh 'ssh -o StrictHostKeyChecking=no -l ubuntu 3.95.222.185 kubectl apply -f demo-webapp/deployment.yaml'
+          sshagent(['k8s']) {
+    	      
+		       sh 'ssh -o StrictHostKeyChecking=no -l ubuntu 3.109.213.35 rm -rf demo-webapp'
+		       sh 'ssh -o StrictHostKeyChecking=no -l ubuntu 3.109.213.35 git clone https://github.com/sushil320/K8S_QP.git'
+		       sh 'ssh -o StrictHostKeyChecking=no -l ubuntu 3.109.213.35 kubectl delete -f demo-webapp/deployment.yaml'
+		       sh 'ssh -o StrictHostKeyChecking=no -l ubuntu 3.109.213.35 kubectl apply -f demo-webapp/deployment.yaml'
 
           }
         }

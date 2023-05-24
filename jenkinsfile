@@ -47,7 +47,7 @@ stage('Checkout SCM') {
            }
       steps{
         script {
-     withDockerRegistry([ credentialsId: "dockercred", url: "" ]) {
+     withDockerRegistry([ credentialsId: "Dockercred", url: "" ]) {
         dockerImage.push()
         }
         }
